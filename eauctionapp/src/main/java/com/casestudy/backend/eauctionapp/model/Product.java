@@ -5,6 +5,7 @@ import java.util.Date;
 
 //import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Future;
@@ -33,6 +34,7 @@ public class Product {
     private BigDecimal startPrice;
     @Future(message = "Bid End Date Should be Future Date !")
     private Date bidEndDate;
+    @Valid
     private Seller seller;
 
     @Data
@@ -44,6 +46,7 @@ public class Product {
         @NotEmpty(message = "First Name Should Not Be Null !")
         @Size(max = 25, min = 3, message = "Last Name Should be min 3 chars and max 25 chars !")
         private String lastName;
+        @Valid
         private Address address;
     }
 
