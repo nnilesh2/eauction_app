@@ -1,0 +1,20 @@
+{
+    "productId": "777",
+    "productName": "Red Painting Product",
+    "shortDescription": "Red Paint",
+    "detailedDescription": "This is a Red Painting Product !",
+    "category": "Painting",
+    "startPrice": 100,
+    "bidEndDate": "2022-10-19T15:17:11.861+00:00",
+    "seller": {
+        "firstName": "Nilesh",
+        "lastName": "Nagare",
+        "address": {
+            "city": "London",
+            "state": "London",
+            "pin": "E12ABC",
+            "phone": "0123456789",
+            "email": "dummy@dummy.com"
+        }
+    }
+}
