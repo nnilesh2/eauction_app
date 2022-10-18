@@ -1,10 +1,14 @@
 package com.casestudy.backend.eauctionapp.rest;
 
+import java.math.BigDecimal;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +27,13 @@ public class BuyerController {
 
     @PostMapping("/place-bid")
     public ResponseEntity<BidResponse> placeBid(@RequestBody @Valid ProductBid productBid) {
-        return new ResponseEntity<>(buyerService.addBid(productBid), HttpStatus.CREATED);
+        return new ResponseEntity<BidResponse>(buyerService.placeBid(productBid), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update-bid/{productId}/{buyerEmailld}/{newBidAmount}")
+    public ResponseEntity<BidResponse> updateBid(@PathVariable final String productId,
+            @PathVariable final String buyerEmailld, @PathVariable final BigDecimal newBidAmount) {
+        return new ResponseEntity<BidResponse>(buyerService.updateBid(productId, buyerEmailld, newBidAmount),
+                HttpStatus.OK);
     }
 }

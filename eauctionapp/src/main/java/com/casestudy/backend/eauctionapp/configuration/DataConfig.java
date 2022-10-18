@@ -18,7 +18,7 @@ import com.casestudy.backend.eauctionapp.model.Buyer;
 import com.casestudy.backend.eauctionapp.model.Category;
 import com.casestudy.backend.eauctionapp.model.Product;
 import com.casestudy.backend.eauctionapp.model.ProductBid;
-import com.casestudy.backend.eauctionapp.model.ProductSell;
+import com.casestudy.backend.eauctionapp.model.ProductAuction;
 import com.casestudy.backend.eauctionapp.model.Seller;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DataConfig {
     HashMap<String, Product> productDataMap = new HashMap<String, Product>();
-    HashMap<String, ProductSell> productSellerMap = new HashMap<String, ProductSell>();
+    HashMap<String, ProductAuction> productSellerMap = new HashMap<String, ProductAuction>();
     HashMap<String, List<ProductBid>> productBidMap = new HashMap<String, List<ProductBid>>();
 
     @Bean
@@ -40,7 +40,7 @@ public class DataConfig {
 
     @Bean
     @DependsOn("productData")
-    public Map<String, ProductSell> productSellData() {
+    public Map<String, ProductAuction> productSellData() {
         productSellerMap.put("777", createDummySell("777"));
         createBidOnProduct("777");
         return productSellerMap;
@@ -97,8 +97,8 @@ public class DataConfig {
                 .build();
     }
 
-    private ProductSell createDummySell(String productID) {
-        return ProductSell.builder().product(productDataMap.get(productID))
+    private ProductAuction createDummySell(String productID) {
+        return ProductAuction.builder().product(productDataMap.get(productID))
                 .startPrice(new BigDecimal("100"))
                 .bidEndDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
                 .seller(Seller.builder().firstName("Nilesh").lastName("Nagare").email("dummy@dummy.com")

@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(ID.class)
-public class ProductSell {
+public class ProductAuction {
     @Id
     private String email;
     @Id

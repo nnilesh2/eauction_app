@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.casestudy.backend.eauctionapp.model.ProductAuction;
 import com.casestudy.backend.eauctionapp.model.ProductBid;
 import com.casestudy.backend.eauctionapp.model.ProductResponse;
-import com.casestudy.backend.eauctionapp.model.ProductSell;
 import com.casestudy.backend.eauctionapp.service.SellerService;
 
 import lombok.AllArgsConstructor;
@@ -31,13 +31,13 @@ public class SellerController {
     private final SellerService sellerService;
 
     @PostMapping("/add-product")
-    public ResponseEntity<ProductResponse> addProduct(@RequestBody @Valid ProductSell product) {
+    public ResponseEntity<ProductResponse> addProduct(@RequestBody @Valid ProductAuction product) {
         log.info("Request Received for Adding Product: {}", product.getProduct().getProductID());
         return new ResponseEntity<>(sellerService.addProduct(product), HttpStatus.CREATED);
     }
 
     @GetMapping("/get-product/{productID}")
-    public ResponseEntity<ProductSell> getProduct(@PathVariable String productID) {
+    public ResponseEntity<ProductAuction> getProduct(@PathVariable String productID) {
         return new ResponseEntity<>(sellerService.getProduct(productID), HttpStatus.OK);
     }
 

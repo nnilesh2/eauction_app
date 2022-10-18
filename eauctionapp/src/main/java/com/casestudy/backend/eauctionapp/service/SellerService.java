@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.casestudy.backend.eauctionapp.eauctiondao.ProductBidRepo;
 import com.casestudy.backend.eauctionapp.eauctiondao.ProductSellRepo;
+import com.casestudy.backend.eauctionapp.model.ProductAuction;
 import com.casestudy.backend.eauctionapp.model.ProductBid;
 import com.casestudy.backend.eauctionapp.model.ProductResponse;
-import com.casestudy.backend.eauctionapp.model.ProductSell;
 
 import lombok.AllArgsConstructor;
 
@@ -24,16 +24,16 @@ public class SellerService {
     private final ProductSellRepo productSellRepo;
     private final ProductBidRepo productBidRepo;
 
-    public ProductResponse addProduct(final ProductSell product) {
+    public ProductResponse addProduct(final ProductAuction product) {
         if (this.getProduct(product.getProduct().getProductID()) != null) {
             throw new RuntimeException(
                     "Product Already Exists with Product ID : " + product.getProduct().getProductID());
         }
-        ProductSell savedProduct = productSellRepo.save(product);
+        ProductAuction savedProduct = productSellRepo.save(product);
         return ProductResponse.builder().productID(savedProduct.getProduct().getProductID()).build();
     }
 
-    public ProductSell getProduct(final String productID) {
+    public ProductAuction getProduct(final String productID) {
         return productSellRepo.findByProduct_ProductID(productID);
     }
 
@@ -48,7 +48,7 @@ public class SellerService {
 
     @Transactional
     public void deleteProduct(final String productID) {
-        ProductSell productSell = this.getProduct(productID);
+        ProductAuction productSell = this.getProduct(productID);
         if (productSell == null) {
             throw new RuntimeException(
                     "No Product Found with Product ID : " + productID);
