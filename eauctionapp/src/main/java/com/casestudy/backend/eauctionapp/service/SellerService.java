@@ -23,7 +23,6 @@ public class SellerService {
 
     private final ProductSellRepo productSellRepo;
     private final ProductBidRepo productBidRepo;
-    // private final Map<String, ProductSell> productSellData;
 
     public ProductResponse addProduct(final ProductSell product) {
         if (this.getProduct(product.getProduct().getProductID()) != null) {
