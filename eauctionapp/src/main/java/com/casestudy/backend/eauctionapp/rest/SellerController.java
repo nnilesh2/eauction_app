@@ -17,39 +17,40 @@ import org.springframework.web.bind.annotation.RestController;
 import com.casestudy.backend.eauctionapp.model.ProductBid;
 import com.casestudy.backend.eauctionapp.model.ProductResponse;
 import com.casestudy.backend.eauctionapp.model.ProductSell;
-import com.casestudy.backend.eauctionapp.service.AuctionService;
+import com.casestudy.backend.eauctionapp.service.SellerService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/e-auction/api/v1")
+@RequestMapping("/e-auction/api/v1/seller")
 @AllArgsConstructor
 @Slf4j
-public class AuctionController {
+public class SellerController {
 
-    private final AuctionService auctionService;
+    private final SellerService sellerService;
 
-    @PostMapping("/seller/add-product")
+    @PostMapping("/add-product")
     public ResponseEntity<ProductResponse> addProduct(@RequestBody @Valid ProductSell product) {
-        return new ResponseEntity<>(auctionService.addProduct(product), HttpStatus.CREATED);
+        log.info("Request Received for Adding Product: {}", product.getProduct().getProductID());
+        return new ResponseEntity<>(sellerService.addProduct(product), HttpStatus.CREATED);
     }
 
-    @GetMapping("/seller/get-product/{productID}")
+    @GetMapping("/get-product/{productID}")
     public ResponseEntity<ProductSell> getProduct(@PathVariable String productID) {
-        return new ResponseEntity<>(auctionService.getProduct(productID), HttpStatus.OK);
+        return new ResponseEntity<>(sellerService.getProduct(productID), HttpStatus.OK);
     }
 
-    @GetMapping("/seller/show-bids/{productID}")
+    @GetMapping("/show-bids/{productID}")
     public ResponseEntity<List<ProductBid>> getBids(@PathVariable String productID) {
         log.info("Invoking AuctionController.getBids >>");
-        return new ResponseEntity<>(auctionService.getBids(productID), HttpStatus.OK);
+        return new ResponseEntity<>(sellerService.getBids(productID), HttpStatus.OK);
     }
 
-    @DeleteMapping("/seller/delete/{productID}")
+    @DeleteMapping("/delete/{productID}")
     public ResponseEntity<String> detleteProduct(@PathVariable String productID) {
         log.info("Invoking AuctionController.detleteProduct >>");
-        auctionService.deleteProduct(productID);
+        sellerService.deleteProduct(productID);
         return new ResponseEntity<>(productID, HttpStatus.ACCEPTED);
     }
 }

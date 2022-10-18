@@ -26,16 +26,24 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @Slf4j
 public class DataConfig {
-    HashMap<String, ProductSell> productDataMap = new HashMap<String, ProductSell>();
+    HashMap<String, Product> productDataMap = new HashMap<String, Product>();
+    HashMap<String, ProductSell> productSellerMap = new HashMap<String, ProductSell>();
     HashMap<String, List<ProductBid>> productBidMap = new HashMap<String, List<ProductBid>>();
 
     @Bean
-    public Map<String, ProductSell> productData() {
+    public Map<String, Product> productData() {
         productDataMap.put("777", createDummyProduct("777"));
-
         createBidOnProduct("777");
 
         return productDataMap;
+    }
+
+    @Bean
+    @DependsOn("productData")
+    public Map<String, ProductSell> productSellData() {
+        productSellerMap.put("777", createDummySell("777"));
+        createBidOnProduct("777");
+        return productSellerMap;
     }
 
     @Bean
@@ -60,12 +68,12 @@ public class DataConfig {
                 .phone("2222222222")
                 .address(getAddress())
                 .build();
-        final ProductBid bid_1 = ProductBid.builder()
-                .product(productDataMap.get(productID).getProduct())
+        final ProductBid bid_1 = ProductBid.builder().productID(productID).email(buyer1.getEmail())
+
                 .bidAmount(new BigDecimal("120"))
                 .buyer(buyer1).build();
-        final ProductBid bid_2 = ProductBid.builder()
-                .product(productDataMap.get(productID).getProduct())
+        final ProductBid bid_2 = ProductBid.builder().productID(productID).email(buyer2.getEmail())
+
                 .bidAmount(new BigDecimal("130"))
                 .buyer(buyer2).build();
 
@@ -75,24 +83,28 @@ public class DataConfig {
         return bids;
     }
 
-    private ProductSell createDummyProduct(String productID) {
-        return ProductSell.builder().product(Product.builder().productId(productID)
+    private Product createDummyProduct(String productID) {
+        return Product.builder().productID(productID)
                 .productName("Red Painting Product")
                 .shortDescription("Red Paint")
                 .detailedDescription("This is a Red Painting Product !")
-                .category(Category.Painting)
-                .startPrice(new BigDecimal("100"))
-                .bidEndDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS))).build())
-                .seller(Seller.builder().firstName("Nilesh").lastName("Nagare").email("dummy@dummy.com")
-                        .phone("7777777777")
-                        .address(getAddress())
-                        .build())
-                .build();
+                .category(Category.Painting.name()).build();
     }
 
     private Address getAddress() {
         return Address.builder().addressLine("Block1,Dummy Road").city("London").state("London")
                 .pin("E12ABC")
+                .build();
+    }
+
+    private ProductSell createDummySell(String productID) {
+        return ProductSell.builder().product(productDataMap.get(productID))
+                .startPrice(new BigDecimal("100"))
+                .bidEndDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
+                .seller(Seller.builder().firstName("Nilesh").lastName("Nagare").email("dummy@dummy.com")
+                        .phone("7777777777")
+                        .address(getAddress())
+                        .build())
                 .build();
     }
 }

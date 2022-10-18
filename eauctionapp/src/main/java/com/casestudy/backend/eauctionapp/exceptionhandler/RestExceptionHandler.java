@@ -36,10 +36,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .build(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<Object> handleException(Exception ex) {
         log.info("Invoking RestExceptionHandler.handleAllExceptions");
+        ex.printStackTrace();
         return new ResponseEntity<Object>(ExceptionEntity.builder()
                 .message(ex.getCause().toString())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)

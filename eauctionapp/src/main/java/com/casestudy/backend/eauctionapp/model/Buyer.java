@@ -1,5 +1,9 @@
 package com.casestudy.backend.eauctionapp.model;
 
+import java.io.Serializable;
+
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
@@ -7,15 +11,22 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-public class Buyer {
+@Entity
+@EqualsAndHashCode(of = {"email"})
+@NoArgsConstructor
+@AllArgsConstructor
+public class Buyer implements Serializable{
+    @Id
     @Email(message = "Please Enter Valid Eamil !")
     @NotEmpty(message = "Email Should Not be Empty !")
-    @Id
     private String email;
     
     @NotEmpty(message = "First Name Should Not Be Null !")
@@ -27,6 +38,7 @@ public class Buyer {
     private String lastName;
     
     @Valid
+    @Embedded
     private Address address;
     
     @Digits(integer = 10, fraction = 0)
