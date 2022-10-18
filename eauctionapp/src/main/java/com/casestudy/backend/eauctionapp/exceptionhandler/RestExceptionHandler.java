@@ -41,7 +41,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleException(Exception ex) {
         log.info("Invoking RestExceptionHandler.handleAllExceptions");
         return new ResponseEntity<Object>(ExceptionEntity.builder()
-                .message(ex.getMessage())
+                .message(ex.getCause().toString())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .timestamp(LocalDateTime.now())
                 .build(), HttpStatus.INTERNAL_SERVER_ERROR);

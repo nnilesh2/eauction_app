@@ -1,11 +1,14 @@
 package com.casestudy.backend.eauctionapp.eauctiondao;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.casestudy.backend.eauctionapp.model.Product;
+import com.casestudy.backend.eauctionapp.model.ProductBid;
 import com.casestudy.backend.eauctionapp.model.ProductResponse;
+import com.casestudy.backend.eauctionapp.model.ProductSell;
 
 import lombok.AllArgsConstructor;
 
@@ -13,17 +16,23 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AuctionDAO {
 
-    private final Map<String, Product> productData;
-    
-    public ProductResponse addProduct(final Product product){
-        if(productData.containsKey(product.getProductId())){
-            throw new RuntimeException("Product Already Exists with Product ID : "+product.getProductId());
-        }
-        productData.put(product.getProductId(), product);
-        return ProductResponse.builder().productID(product.getProductId()).build();
+    private final Map<String, ProductSell> productData;
+    private final HashMap<String, List<ProductBid>> productBidData;
+
+    public ProductResponse addProduct(final ProductSell product) {
+        productData.put(product.getProduct().getProductId(), product);
+        return ProductResponse.builder().productID(product.getProduct().getProductId()).build();
     }
 
-    public Product getProduct(final String productID){
+    public ProductSell getProduct(final String productID) {
         return productData.get(productID);
+    }
+
+    public List<ProductBid> getBids(final String productID) {
+        return productBidData.get(productID);
+    }
+
+    public void deleteProduct(String productID) {
+        productData.remove(productID);
     }
 }
