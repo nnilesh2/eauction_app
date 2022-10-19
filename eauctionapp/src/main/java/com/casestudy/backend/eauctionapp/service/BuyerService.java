@@ -23,6 +23,9 @@ public class BuyerService {
     private final SellerService sellerService;
 
     public BidResponse placeBid(ProductBid productBid) {
+        //populate buyer email for persistence 
+        productBid.setEmail(productBid.getBuyer().getEmail());
+
         ProductAuction productForAuction = sellerService.getProduct(productBid.getProductID());
         if (productForAuction == null) {
             throw new RuntimeException("No Product Available For Bid With Product ID :" + productBid.getProductID());

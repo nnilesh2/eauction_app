@@ -25,6 +25,10 @@ public class SellerService {
     private final ProductBidRepo productBidRepo;
 
     public ProductResponse addProduct(final ProductAuction product) {
+        //populate IDs for Persistence
+        product.setProductID(product.getProduct().getProductID());
+        product.setEmail(product.getSeller().getEmail());
+
         if (this.getProduct(product.getProduct().getProductID()) != null) {
             throw new RuntimeException(
                     "Product Already Exists with Product ID : " + product.getProduct().getProductID());
