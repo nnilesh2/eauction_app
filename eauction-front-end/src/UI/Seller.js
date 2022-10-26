@@ -1,5 +1,6 @@
 import { Grid, Tab, Tabs, Box, Typography, TextField } from "@mui/material";
 import { useState } from "react";
+import AddProduct from "./AddProduct";
 import PersonalDetails from "./PersonalDetails";
 
 const Seller = (props) => {
@@ -23,7 +24,7 @@ const Seller = (props) => {
                     <Box sx={{ padding: 2 }}>
                         {tabIndex === 0 && (
                             <Box>
-                                <PersonalDetails/>
+                               <AddProduct/>
                             </Box>
                         )}
                         {tabIndex === 1 && (

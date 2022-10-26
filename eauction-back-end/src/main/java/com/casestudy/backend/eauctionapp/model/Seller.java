@@ -31,7 +31,7 @@ public class Seller implements Serializable{
     @NotEmpty(message = "First Name Should Not Be Null !")
     @Size(max = 30, min = 5, message = "First Name Should be min 5 chars and max 30 chars !")
     private String firstName;
-    @NotEmpty(message = "First Name Should Not Be Null !")
+    @NotEmpty(message = "Last Name Should Not Be Null !")
     @Size(max = 25, min = 3, message = "Last Name Should be min 3 chars and max 25 chars !")
     private String lastName;
     @Valid
