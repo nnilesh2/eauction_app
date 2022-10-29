@@ -57,11 +57,15 @@ const AddProduct = (props) => {
         resolver: yupResolver(addproduct)
     });
 
+    
+
     const options = {
-        method: 'GET'
+        method: 'GET',
+        
+        rejectUnauthorized:false
     };
 
-    const URL = 'https://8080-nnilesh2-casestudybacke-sl5nibs6t3b.ws-eu73.gitpod.io//e-auction/api/v1/seller/show-bids/7'
+    const URL = 'http://192.168.6.144:8080/e-auction/api/v1/seller/show-bids/7'
 
     async function onSubmit(data) {
         var bids = await fetch(URL,options).then(response => response.json());
