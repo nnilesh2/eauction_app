@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,7 +19,7 @@ import com.casestudy.backend.eauctionapp.model.ProductBid;
 import com.casestudy.backend.eauctionapp.service.BuyerService;
 
 import lombok.AllArgsConstructor;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/e-auction/api/v1/buyer")
 @AllArgsConstructor

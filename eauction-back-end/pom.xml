@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.casestudy.backend</groupId>
-	<artifactId>eauctionapp</artifactId>
+	<artifactId>eauction-back-end</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>eauctionapp</name>
+	<name>eauction-back-end</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
