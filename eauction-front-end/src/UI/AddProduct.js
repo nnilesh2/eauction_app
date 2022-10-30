@@ -1,12 +1,16 @@
-import React, { Fragment, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useState } from 'react';
+import { useForm, } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import "yup-phone";
-import { Box, Button, Grid, InputLabel, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 
 
 const AddProduct = (props) => {
+
+    const [addProdcutHidden, setAddProductHidden] = useState(false);
+    const [message, setMessage] = useState('');
+    const [success, setSuccess] = useState(false);
 
     const addproduct = Yup.object().shape({
         seller: Yup.object().shape({
@@ -24,6 +28,7 @@ const AddProduct = (props) => {
                 .max(30, 'Last Name must not exceed 20 characters'),
 
             phone: Yup.string()
+                .length(10)
                 .required('Phone Number Should Not be Empty !')
                 .phone('Phone Number Should be 10 Digits !'),
             address: Yup.object().shape({
@@ -52,33 +57,48 @@ const AddProduct = (props) => {
     const {
         register,
         handleSubmit,
-        formState: { errors }
+        formState: { errors },
+        reset
     } = useForm({
         resolver: yupResolver(addproduct)
     });
 
-    
-
-    const options = {
-        method: 'GET',
-        
-        rejectUnauthorized:false
-    };
-
-    const URL = 'http://192.168.6.144:8080/e-auction/api/v1/seller/show-bids/7'
+    const addProductDialog = () => {
+        setAddProductHidden(false);
+    }
 
     async function onSubmit(data) {
-        var bids = await fetch(URL,options).then(response => response.json());
-        console.log(JSON.stringify(bids, null, 2));
+        const options = {
+            method: 'POST',
+            rejectUnauthorized: false,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+        const ADD_PRODUCT_URL = 'http://localhost:8080/e-auction/api/v1/seller/add-product'
+        var response = await fetch(ADD_PRODUCT_URL, options);
+        var response_data = await response.json();
+        if (response.ok) {
+            setMessage('Product Added Successfully, Product ID: ' + response_data.productID);
+            setAddProductHidden(true);
+            setSuccess(true);
+        } else {
+            setMessage('Failed : ' + response_data.message);
+            setAddProductHidden(true);
+            setSuccess(false);
+        }
+
+        reset({seller:null,product:null,startPrice:null,bidEndDate:null});
     }
 
 
     return (
-        <Fragment>
-            <Paper>
-                <Typography variant="h6" align="center" margin="dense">Add Product</Typography>
-                <Grid margin container spacing={3}  >
+        <>
+            <div hidden={addProdcutHidden} style={{ width: '60%' }}>
 
+                <Typography variant="h6" align="center" color={'white'} margin="dense">Add Product</Typography>
+                <Grid margin container spacing={3}  >
                     <Grid spacing={1} xs={5}>
 
                         <TextField required id="email" name="email" label="Email" fullWidth margin="dense" variant='outlined'
@@ -125,10 +145,21 @@ const AddProduct = (props) => {
                             {...register('product.productName')} error={errors.product?.productName ? true : false} />
                         <Typography variant="overline" color="textSecondary">{errors.product?.productName?.message}</Typography>
 
-                        <TextField required id="category" name="category" label="Product Category" fullWidth margin="dense" variant='outlined'
-                            {...register('product.category')} error={errors.product?.category ? true : false} />
+                        <InputLabel id="category">Product Category*</InputLabel>
+                        <Select
+                            labelId="category"
+                            id="category_select"
+                            label="Product Category"
+                            defaultValue={'Painting'}
+                            required
+                            fullWidth
+                            {...register('product.category')} error={errors.product?.category ? true : false}
+                        >
+                            <MenuItem value={'Painting'}>Painting</MenuItem>
+                            <MenuItem value={'Sculptor'}>Sculptor</MenuItem>
+                            <MenuItem value={'Ornament'}>Ornament</MenuItem>
+                        </Select>
                         <Typography variant="overline" color="textSecondary">{errors.product?.category?.message}</Typography>
-
 
                         <TextField required id="shortDescription" name="shortDescription" label="Produc Short Description" fullWidth margin="dense" variant='outlined'
                             {...register('product.shortDescription')} />
@@ -140,18 +171,29 @@ const AddProduct = (props) => {
                             {...register('startPrice')} error={errors.startPrice ? true : false} />
                         <Typography variant="overline" color="textSecondary">{errors.startPrice?.message ? 'Start Price Should be Positiive Number' : ''}</Typography>
 
-                        <TextField required id="bidEndDate" label='Bid End Date' align='right' type='date' name="bidEndDate" fullWidth margin="dense" variant='outlined'
+                        <InputLabel id="bidenddatelabel">Bid End Date*</InputLabel>
+                        <TextField labelId='bidenddatelabel' required id="bidEndDate" align='right' type='date' name="bidEndDate" fullWidth margin="dense" variant='outlined'
                             {...register('bidEndDate')} error={errors.bidEndDate ? true : false} />
                         <Typography variant="overline" color="textSecondary">{errors.bidEndDate?.message ? 'Bid Date Should Not be Null !' : ''}</Typography>
 
                     </Grid>
 
                 </Grid>
-                <Box mt={3} align='center'>
+                <Box mt={3} align='right' padding={1}>
                     <Button variant="contained" color="primary" onClick={handleSubmit(onSubmit)}>Add Product</Button>
                 </Box>
-            </Paper>
-        </Fragment>
+
+
+            </div>
+            <div hidden={!addProdcutHidden} style={{ width: '50%' }}>
+                <Grid margin spacing={2} color={success ? 'green' : 'red'}>
+                    <Typography variant="h6" align="left" margin="dense">{message}</Typography>
+                    <Box padding={1} align='right'>
+                        <Button variant="contained" color="primary" onClick={addProductDialog}>close</Button>
+                    </Box>
+                </Grid>
+            </div>
+        </>
     );
 
 }

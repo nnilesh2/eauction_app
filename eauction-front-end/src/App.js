@@ -1,14 +1,21 @@
 import './App.css';
-import { Box} from '@mui/material'
+import { Box, createTheme, ThemeProvider } from '@mui/material'
 import LoginByRole from './UI/LoginByRole';
-import { bgcolor } from '@mui/system';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 function App() {
   return (
     <div className='App'>
-    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <LoginByRole/>
-    </Box>
+      <ThemeProvider theme={darkTheme}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <LoginByRole />
+        </Box>
+      </ThemeProvider>
     </div>
   );
 }
