@@ -49,9 +49,8 @@ public class SellerController {
     }
 
     @DeleteMapping("/delete/{productID}")
-    public ResponseEntity<String> detleteProduct(@PathVariable String productID) {
+    public ResponseEntity<ProductResponse> detleteProduct(@PathVariable String productID) {
         log.info("Invoking AuctionController.detleteProduct >>");
-        sellerService.deleteProduct(productID);
-        return new ResponseEntity<>(productID, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(sellerService.deleteProduct(productID), HttpStatus.ACCEPTED);
     }
 }

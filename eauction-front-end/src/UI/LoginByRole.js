@@ -1,15 +1,15 @@
-import { Container,InputLabel,Select,MenuItem, MenuList, Grid } from "@mui/material";
-import { useRef, useState } from "react";
+import { InputLabel, Select, MenuItem, Grid } from "@mui/material";
+import { useState } from "react";
 import Buyer from "./Buyer";
 import Seller from "./Seller";
 
 const LoginByRole = (props) => {
 
-    const [role,setRole] = useState('Seller');
+    const [role, setRole] = useState('Seller');
 
-    var isSeller = role ==='Seller' ? true : false;
+    var isSeller = role === 'Seller' ? true : false;
 
-    const rolechangeHandler = (event)=>{
+    const rolechangeHandler = (event) => {
         setRole(event.target.value);
         console.log(event.target.value);
     }
@@ -27,11 +27,11 @@ const LoginByRole = (props) => {
                 >
                     <MenuItem value={'Seller'}>Seller</MenuItem>
                     <MenuItem value={'Buyer'}>Buyer</MenuItem>
-                </Select>        
+                </Select>
             </Grid>
             <div >
-            {isSeller && <Seller/>}
-            {!isSeller && <Buyer/>}
+                {isSeller && <Seller />}
+                {!isSeller && <Buyer />}
             </div>
         </div>
     );

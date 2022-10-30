@@ -40,7 +40,7 @@ public class BuyerService {
                 .findById(ID.builder().productID(productId).email(buyerEmailld).build());
         if (productBidOptional.isEmpty() || productForAuction == null) {
             throw new RuntimeException(
-                    "No Product Available For Bid With Product ID :" + productId + " Email ID" + buyerEmailld);
+                    "No Product Available For Bid With Product ID :" + productId + " Email ID :" + buyerEmailld);
         }
 
         if (Date.from(Instant.now()).after(productForAuction.getBidEndDate())) {

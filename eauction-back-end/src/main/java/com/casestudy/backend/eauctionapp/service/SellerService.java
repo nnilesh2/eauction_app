@@ -51,7 +51,7 @@ public class SellerService {
     }
 
     @Transactional
-    public void deleteProduct(final String productID) {
+    public ProductResponse deleteProduct(final String productID) {
         ProductAuction productSell = this.getProduct(productID);
         if (productSell == null) {
             throw new RuntimeException(
@@ -68,5 +68,6 @@ public class SellerService {
                             + productSell.getBidEndDate());
         }
         productSellRepo.delete(productSell);
+        return ProductResponse.builder().productID(productID).build();
     }
 }

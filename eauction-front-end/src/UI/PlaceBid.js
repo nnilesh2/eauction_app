@@ -73,7 +73,7 @@ const PlaceBid = (props) => {
             setSuccess(false);
         }
 
-        reset({ buyer: null, bidAmount: null, bidAmount:null });
+        reset({ buyer: null, productID: null, bidAmount:null });
     }
 
     return (<>

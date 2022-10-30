@@ -1,6 +1,8 @@
-import { Grid, Tab, Tabs, Box, Typography} from "@mui/material";
+import { Grid, Tab, Tabs, Box} from "@mui/material";
 import { useState } from "react";
 import AddProduct from "./AddProduct";
+import DeleteProduct from "./DeleteProduct";
+import ShowBids from "./ShowBids";
 
 const Seller = (props) => {
 
@@ -28,12 +30,12 @@ const Seller = (props) => {
                         )}
                         {tabIndex === 1 && (
                             <Box>
-                                <Typography>The second tab</Typography>
+                               <DeleteProduct/>
                             </Box>
                         )}
                         {tabIndex === 2 && (
                             <Box>
-                                <Typography>The third tab</Typography>
+                                <ShowBids/>
                             </Box>
                         )}
                     </Box>
