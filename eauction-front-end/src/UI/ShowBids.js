@@ -4,13 +4,20 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import "yup-phone";
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
-import { DataGrid} from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
+import { useEffect } from 'react';
 
 const ShowBids = (props) => {
+
+    const BASE_URL = 'http://localhost:8080';
 
     const [hideBids, setHideBids] = useState(true);
     const [message, setMesssage] = useState('');
     const [bidData, setBidData] = useState([]);
+
+    useEffect(() => {
+
+    }, [bidData])
 
     const showbidschema = Yup.object().shape({
         productID: Yup.string().required('Product ID is required')
@@ -31,26 +38,22 @@ const ShowBids = (props) => {
     async function onSubmit(data) {
         rows = []
         const productID = data.productID;
-        const SHOW_BIDS_URL = 'http://localhost:8080/e-auction/api/v1/seller/show-bids/' + productID;
+        const SHOW_BIDS_URL = BASE_URL + '/e-auction/api/v1/seller/show-bids/' + productID;
         var response = await fetch(SHOW_BIDS_URL);
-        var response_data = [];
-        if (response.ok) {
-            response_data = await response.json();
-            for (var i = 0; i < response_data.length; i++) {
-                rows.push({
-                    id: i + 1,
-                    email: response_data[i].buyer.email,
-                    name: response_data[i].buyer.firstName + ' ' + response_data[i].buyer.lastName,
-                    phone: response_data[i].buyer.phone,
-                    amount: response_data[i].bidAmount
-                });
-            }
-            setBidData(rows);
-            setHideBids(false);
-            setMesssage("Bids for Product ID : " + productID);
-        } else {
-            setHideBids(false);
+        var response_data = await response.json();
+        for (var i = 0; i < response_data.length; i++) {
+            rows.push({
+                id: i + 1,
+                email: response_data[i].buyer.email,
+                name: response_data[i].buyer.firstName + ' ' + response_data[i].buyer.lastName,
+                phone: response_data[i].buyer.phone,
+                amount: response_data[i].bidAmount
+            });
         }
+        setBidData(rows);
+        setHideBids(false);
+        setMesssage("Bids for Product ID : " + productID);
+
         reset({ productID: null });
     }
 

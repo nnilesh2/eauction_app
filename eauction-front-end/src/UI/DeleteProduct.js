@@ -10,6 +10,8 @@ const DeleteProduct = (props) => {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const BASE_URL = 'http://localhost:8080';
+
     const deleteProductSchema = Yup.object().shape({
         productID: Yup.string().required('Product ID is required')
     });
@@ -30,7 +32,7 @@ const DeleteProduct = (props) => {
                }
         };
         const productID = data.productID;
-        const DELETE_BID_URL = 'http://localhost:8080/e-auction/api/v1/seller/delete/'+productID;
+        const DELETE_BID_URL = BASE_URL+'/e-auction/api/v1/seller/delete/'+productID;
         var response = await fetch(DELETE_BID_URL, options);
         var response_data = await response.json();
         if (response.ok) {

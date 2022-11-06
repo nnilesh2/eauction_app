@@ -11,6 +11,8 @@ const PlaceBid = (props) => {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const BASE_URL = 'http://localhost:8080';
+
     const placebidschema = Yup.object().shape({
         buyer: Yup.object().shape({
             email: Yup.string()
@@ -60,7 +62,7 @@ const PlaceBid = (props) => {
             },
             body: JSON.stringify(bidData)
         };
-        const PLACE_BID_URL = 'http://localhost:8080/e-auction/api/v1/buyer/place-bid'
+        const PLACE_BID_URL = BASE_URL+'/e-auction/api/v1/buyer/place-bid'
         var response = await fetch(PLACE_BID_URL, options);
         var response_data = await response.json();
         if (response.ok) {

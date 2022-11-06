@@ -12,6 +12,8 @@ const AddProduct = (props) => {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const BASE_URL = 'http://localhost:8080';
+
     const addproduct = Yup.object().shape({
         seller: Yup.object().shape({
             email: Yup.string()
@@ -76,7 +78,7 @@ const AddProduct = (props) => {
             },
             body: JSON.stringify(data)
         };
-        const ADD_PRODUCT_URL = 'http://localhost:8080/e-auction/api/v1/seller/add-product'
+        const ADD_PRODUCT_URL = BASE_URL+'/e-auction/api/v1/seller/add-product'
         var response = await fetch(ADD_PRODUCT_URL, options);
         var response_data = await response.json();
         if (response.ok) {

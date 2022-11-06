@@ -7,6 +7,8 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 
 const UpdateBid = (props) => {
 
+    const BASE_URL = 'http://localhost:8080';
+
     const [updateBidHiddlen, setUpdateBidHiddlen] = useState(false);
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
@@ -40,7 +42,7 @@ const UpdateBid = (props) => {
         const email = data.email;
         const bidAmount = data.bidAmount;
 
-        const UPDATE_BID_URL = 'http://localhost:8080/e-auction/api/v1/buyer/update-bid/'+productID+'/'+email+'/'+ bidAmount;
+        const UPDATE_BID_URL = BASE_URL+'/e-auction/api/v1/buyer/update-bid/'+productID+'/'+email+'/'+ bidAmount;
         var response = await fetch(UPDATE_BID_URL, options);
         var response_data = await response.json();
         if (response.ok) {
