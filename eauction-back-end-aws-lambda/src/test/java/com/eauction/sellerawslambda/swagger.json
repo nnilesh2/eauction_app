@@ -1,0 +1,447 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Generated server url"
+        }
+    ],
+    "paths": {
+        "/e-auction/api/v1/buyer/update-bid/{productId}/{buyerEmailld}/{newBidAmount}": {
+            "put": {
+                "tags": [
+                    "buyer-controller"
+                ],
+                "operationId": "updateBid",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "buyerEmailld",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "newBidAmount",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            
+                                "schema": {
+                                    "type": "object"
+                                }
+                            
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            
+                                "schema": {
+                                    "$ref": "#/components/schemas/BidResponse"
+                                }
+                            
+                        }
+                    }
+                }
+            }
+        },
+        "/e-auction/api/v1/seller/add-product": {
+            "post": {
+                "tags": [
+                    "seller-controller"
+                ],
+                "operationId": "addProduct",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductAuction"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            
+                                "schema": {
+                                    "type": "object"
+                                }
+                            
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResponse"
+                                }
+                            
+                        }
+                    }
+                }
+            }
+        },
+        "/e-auction/api/v1/buyer/place-bid": {
+            "post": {
+                "tags": [
+                    "buyer-controller"
+                ],
+                "operationId": "placeBid",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductBid"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            
+                                "schema": {
+                                    "type": "object"
+                                }
+                            
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            
+                                "schema": {
+                                    "$ref": "#/components/schemas/BidResponse"
+                                }
+                            
+                        }
+                    }
+                }
+            }
+        },
+        "/e-auction/api/v1/seller/show-bids/{productID}": {
+            "get": {
+                "tags": [
+                    "seller-controller"
+                ],
+                "operationId": "getBids",
+                "parameters": [
+                    {
+                        "name": "productID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            
+                                "schema": {
+                                    "type": "object"
+                                }
+                            
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProductBid"
+                                    }
+                                }
+                            
+                        }
+                    }
+                }
+            }
+        },
+        "/e-auction/api/v1/seller/get-product/{productID}": {
+            "get": {
+                "tags": [
+                    "seller-controller"
+                ],
+                "operationId": "getProduct",
+                "parameters": [
+                    {
+                        "name": "productID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            
+                                "schema": {
+                                    "type": "object"
+                                }
+                            
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductAuction"
+                                }
+                            
+                        }
+                    }
+                }
+            }
+        },
+        "/e-auction/api/v1/seller/delete/{productID}": {
+            "delete": {
+                "tags": [
+                    "seller-controller"
+                ],
+                "operationId": "detleteProduct",
+                "parameters": [
+                    {
+                        "name": "productID",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            
+                                "schema": {
+                                    "type": "object"
+                                }
+                            
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResponse"
+                                }
+                            
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BidResponse": {
+                "type": "object",
+                "properties": {
+                    "productID": {
+                        "type": "string"
+                    },
+                    "bidAmount": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Address": {
+                "type": "object",
+                "properties": {
+                    "addressLine": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "pin": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Product": {
+                "required": [
+                    "productName"
+                ],
+                "type": "object",
+                "properties": {
+                    "productID": {
+                        "type": "string"
+                    },
+                    "productName": {
+                        "maxLength": 30,
+                        "minLength": 5,
+                        "type": "string"
+                    },
+                    "shortDescription": {
+                        "type": "string"
+                    },
+                    "detailedDescription": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ProductAuction": {
+                "required": [
+                    "startPrice"
+                ],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "productID": {
+                        "type": "string"
+                    },
+                    "seller": {
+                        "$ref": "#/components/schemas/Seller"
+                    },
+                    "product": {
+                        "$ref": "#/components/schemas/Product"
+                    },
+                    "startPrice": {
+                        "type": "number"
+                    },
+                    "bidEndDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Seller": {
+                "required": [
+                    "email",
+                    "firstName",
+                    "lastName",
+                    "phone"
+                ],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "maxLength": 30,
+                        "minLength": 5,
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "maxLength": 25,
+                        "minLength": 3,
+                        "type": "string"
+                    },
+                    "address": {
+                        "$ref": "#/components/schemas/Address"
+                    },
+                    "phone": {
+                        "maxLength": 10,
+                        "minLength": 10,
+                        "type": "string"
+                    }
+                }
+            },
+            "ProductResponse": {
+                "type": "object",
+                "properties": {
+                    "productID": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Buyer": {
+                "required": [
+                    "email",
+                    "firstName",
+                    "lastName",
+                    "phone"
+                ],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "maxLength": 30,
+                        "minLength": 5,
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "maxLength": 25,
+                        "minLength": 3,
+                        "type": "string"
+                    },
+                    "address": {
+                        "$ref": "#/components/schemas/Address"
+                    },
+                    "phone": {
+                        "maxLength": 10,
+                        "minLength": 10,
+                        "type": "string"
+                    }
+                }
+            },
+            "ProductBid": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "productID": {
+                        "type": "string"
+                    },
+                    "buyer": {
+                        "$ref": "#/components/schemas/Buyer"
+                    },
+                    "bidAmount": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    }
+}
