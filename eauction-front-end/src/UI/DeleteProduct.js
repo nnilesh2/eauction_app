@@ -10,7 +10,7 @@ const DeleteProduct = (props) => {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
 
-    const BASE_URL = 'http://localhost:8080';
+    const BASE_URL = 'https://kzjbpinr64.execute-api.us-east-1.amazonaws.com/prod';
 
     const deleteProductSchema = Yup.object().shape({
         productID: Yup.string().required('Product ID is required')
@@ -26,16 +26,35 @@ const DeleteProduct = (props) => {
         const options = {
             method: 'DELETE',
             rejectUnauthorized: false,
-            headers : { 
+            headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
-               }
+            }
         };
         const productID = data.productID;
-        const DELETE_BID_URL = BASE_URL+'/e-auction/api/v1/seller/delete/'+productID;
+        const DELETE_BID_URL = BASE_URL + '/e-auction/api/v1/seller/delete/' + productID;
         var response = await fetch(DELETE_BID_URL, options);
         var response_data = await response.json();
+
         if (response.ok) {
+
+            const email_body = {
+                data: JSON.stringify(data),
+                emailsubject: 'Product Deleted Successfully, Product ID: ' + response_data.productID,
+                email: 'nnilesh2@gmail.com'
+            }
+
+            const email_options = {
+                method: 'POST',
+                rejectUnauthorized: false,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(email_body)
+            }
+            //sending email
+            const EMAIL_URL = BASE_URL + '/e-auction/api/v1/email'
+            await fetch(EMAIL_URL, email_options);
             setMessage('Product Deleted Successfully, Product ID: ' + response_data.productID);
             setDeleteProductBidHiddlen(true);
             setSuccess(true);

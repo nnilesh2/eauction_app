@@ -12,7 +12,7 @@ const AddProduct = (props) => {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
 
-    const BASE_URL = 'http://localhost:8080';
+    const BASE_URL = 'https://kzjbpinr64.execute-api.us-east-1.amazonaws.com/prod';
 
     const addproduct = Yup.object().shape({
         seller: Yup.object().shape({
@@ -78,20 +78,39 @@ const AddProduct = (props) => {
             },
             body: JSON.stringify(data)
         };
-        const ADD_PRODUCT_URL = BASE_URL+'/e-auction/api/v1/seller/add-product'
+        const ADD_PRODUCT_URL = BASE_URL + '/e-auction/api/v1/seller/add-product'
         var response = await fetch(ADD_PRODUCT_URL, options);
         var response_data = await response.json();
         if (response.ok) {
+
+            const email_body =  {
+                data:JSON.stringify(data),
+                emailsubject:'Product Added Successfully, Product ID: '+ response_data.productID,
+                email:data.seller.email
+            }
+
+            const email_options = {
+                method: 'POST',
+                rejectUnauthorized: false,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify(email_body)
+            }
+            //sending email
+            const EMAIL_URL = BASE_URL+'/e-auction/api/v1/email'
+            await fetch(EMAIL_URL, email_options);
             setMessage('Product Added Successfully, Product ID: ' + response_data.productID);
             setAddProductHidden(true);
             setSuccess(true);
+            
         } else {
             setMessage('Failed : ' + response_data.message);
             setAddProductHidden(true);
             setSuccess(false);
         }
 
-        reset({seller:null,product:null,startPrice:null,bidEndDate:null});
+        reset({ seller: null, product: null, startPrice: null, bidEndDate: null });
     }
 
 

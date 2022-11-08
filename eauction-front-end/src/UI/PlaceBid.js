@@ -11,7 +11,7 @@ const PlaceBid = (props) => {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
 
-    const BASE_URL = 'http://localhost:8080';
+    const BASE_URL = 'https://kzjbpinr64.execute-api.us-east-1.amazonaws.com/prod';
 
     const placebidschema = Yup.object().shape({
         buyer: Yup.object().shape({
@@ -53,7 +53,7 @@ const PlaceBid = (props) => {
     }
 
     async function onSubmit(data) {
-        const bidData = { ...data, email: data.buyer.email}
+        const bidData = { ...data, email: data.buyer.email }
         const options = {
             method: 'POST',
             rejectUnauthorized: false,
@@ -62,10 +62,28 @@ const PlaceBid = (props) => {
             },
             body: JSON.stringify(bidData)
         };
-        const PLACE_BID_URL = BASE_URL+'/e-auction/api/v1/buyer/place-bid'
+        const PLACE_BID_URL = BASE_URL + '/e-auction/api/v1/buyer/place-bid'
         var response = await fetch(PLACE_BID_URL, options);
         var response_data = await response.json();
         if (response.ok) {
+
+            const email_body = {
+                data: JSON.stringify(data),
+                emailsubject: 'Bid Placed Successfully, Product ID: ' + response_data.productID,
+                email: data.buyer.email
+            }
+
+            const email_options = {
+                method: 'POST',
+                rejectUnauthorized: false,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(email_body)
+            }
+            //sending email
+            const EMAIL_URL = BASE_URL + '/e-auction/api/v1/email'
+            await fetch(EMAIL_URL, email_options);
             setMessage('Bid Placed Successfully, Product ID: ' + response_data.productID);
             setPlaceBidHiddlen(true);
             setSuccess(true);
@@ -75,7 +93,7 @@ const PlaceBid = (props) => {
             setSuccess(false);
         }
 
-        reset({ buyer: null, productID: null, bidAmount:null });
+        reset({ buyer: null, productID: null, bidAmount: null });
     }
 
     return (<>

@@ -7,7 +7,7 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 
 const UpdateBid = (props) => {
 
-    const BASE_URL = 'http://localhost:8080';
+    const BASE_URL = 'https://kzjbpinr64.execute-api.us-east-1.amazonaws.com/prod';
 
     const [updateBidHiddlen, setUpdateBidHiddlen] = useState(false);
     const [message, setMessage] = useState('');
@@ -42,10 +42,28 @@ const UpdateBid = (props) => {
         const email = data.email;
         const bidAmount = data.bidAmount;
 
-        const UPDATE_BID_URL = BASE_URL+'/e-auction/api/v1/buyer/update-bid/'+productID+'/'+email+'/'+ bidAmount;
+        const UPDATE_BID_URL = BASE_URL + '/e-auction/api/v1/buyer/update-bid/' + productID + '/' + email + '/' + bidAmount;
         var response = await fetch(UPDATE_BID_URL, options);
         var response_data = await response.json();
         if (response.ok) {
+
+            const email_body = {
+                data: JSON.stringify(data),
+                emailsubject: 'Bid Updated Successfully, Product ID: ' + response_data.productID,
+                email: data.email
+            }
+
+            const email_options = {
+                method: 'POST',
+                rejectUnauthorized: false,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(email_body)
+            }
+            //sending email
+            const EMAIL_URL = BASE_URL + '/e-auction/api/v1/email'
+            await fetch(EMAIL_URL, email_options);
             setMessage('Bid Updated Successfully, Product ID: ' + response_data.productID);
             setUpdateBidHiddlen(true);
             setSuccess(true);

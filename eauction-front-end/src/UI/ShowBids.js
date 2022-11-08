@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 
 const ShowBids = (props) => {
 
-    const BASE_URL = 'http://localhost:8080';
+    const BASE_URL = 'https://kzjbpinr64.execute-api.us-east-1.amazonaws.com/prod';
 
     const [hideBids, setHideBids] = useState(true);
     const [message, setMesssage] = useState('');
