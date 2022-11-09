@@ -7,7 +7,8 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 
 const UpdateBid = (props) => {
 
-    const BASE_URL = 'https://kzjbpinr64.execute-api.us-east-1.amazonaws.com/prod';
+    const BASE_URL = 'http://eauctionebs-env-2.eba-3kytec32.us-east-1.elasticbeanstalk.com';
+    const BASE_URL_EMAIL = 'https://kzjbpinr64.execute-api.us-east-1.amazonaws.com/prod';
 
     const [updateBidHiddlen, setUpdateBidHiddlen] = useState(false);
     const [message, setMessage] = useState('');
@@ -62,7 +63,7 @@ const UpdateBid = (props) => {
                 body: JSON.stringify(email_body)
             }
             //sending email
-            const EMAIL_URL = BASE_URL + '/e-auction/api/v1/email'
+            const EMAIL_URL = BASE_URL_EMAIL + '/e-auction/api/v1/email'
             await fetch(EMAIL_URL, email_options);
             setMessage('Bid Updated Successfully, Product ID: ' + response_data.productID);
             setUpdateBidHiddlen(true);

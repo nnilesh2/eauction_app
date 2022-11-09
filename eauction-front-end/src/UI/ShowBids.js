@@ -9,7 +9,8 @@ import { useEffect } from 'react';
 
 const ShowBids = (props) => {
 
-    const BASE_URL = 'https://kzjbpinr64.execute-api.us-east-1.amazonaws.com/prod';
+    const BASE_URL = 'http://eauctionebs-env-2.eba-3kytec32.us-east-1.elasticbeanstalk.com';
+    const BASE_URL_EMAIL = 'https://kzjbpinr64.execute-api.us-east-1.amazonaws.com/prod';
 
     const [hideBids, setHideBids] = useState(true);
     const [message, setMesssage] = useState('');
