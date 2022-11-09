@@ -1,0 +1,16 @@
+{
+    "productID": "7",
+    "buyer": {
+        "email": "buyer2@eauction.com",
+        "firstName": "Buyer_2",
+        "lastName": "Buyer_2_Last_Name",
+        "address": {
+            "addressLine": "Block1,Dummy Road",
+            "city": "London",
+            "state": "London",
+            "pin": "E12ABC"
+        },
+        "phone": "2222222222"
+    },
+    "bidAmount": 130
+}

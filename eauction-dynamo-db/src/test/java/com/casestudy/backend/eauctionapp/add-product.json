@@ -1,0 +1,23 @@
+{
+    "seller": {
+        "email": "dummy7@dummy.com",
+        "firstName": "Nilesh",
+        "lastName": "Nagare",
+        "address": {
+            "addressLine": "Block1,Dummy Road",
+            "city": "London",
+            "state": "London",
+            "pin": "E12ABC"
+        },
+        "phone": "7777777777"
+    },
+    "product": {
+        "productID": "7",
+        "productName": "Red Painting Product",
+        "shortDescription": "Red Paint",
+        "detailedDescription": "This is a Red Painting Product !",
+        "category": "Painting"
+    },
+    "startPrice": 100,
+    "bidEndDate": "2022-10-20T20:58:55.356+00:00"
+}

@@ -1,0 +1,1 @@
+java -jar target/eauction-back-end-0.0.1-SNAPSHOT-spring-boot.jar com.casestudy.backend.eauctionapp.AuctionappApplication
