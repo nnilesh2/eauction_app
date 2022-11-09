@@ -43,13 +43,16 @@ const ShowBids = (props) => {
         var response = await fetch(SHOW_BIDS_URL);
         var response_data = await response.json();
         for (var i = 0; i < response_data.length; i++) {
-            rows.push({
-                id: i + 1,
-                email: response_data[i].buyer.email,
-                name: response_data[i].buyer.firstName + ' ' + response_data[i].buyer.lastName,
-                phone: response_data[i].buyer.phone,
-                amount: response_data[i].bidAmount
-            });
+            if (response_data[i] != null) {
+                rows.push({
+                    id: i + 1,
+                    email: response_data[i].buyer.email,
+                    name: response_data[i].buyer.firstName + ' ' + response_data[i].buyer.lastName,
+                    phone: response_data[i].buyer.phone,
+                    amount: response_data[i].bidAmount
+                });
+            }
+
         }
         setBidData(rows);
         setHideBids(false);
